@@ -10,6 +10,7 @@ import Hero from '@/components/landing/hero';
 import Newsletter from '@/components/landing/newsletter';
 import SecondSection from '@/components/landing/second-section';
 import NavbarFixed from '@/components/navbar/NavbarFixed';
+import FeaturesTitle from '@/components/landing/features-title';
 
 export default async function PricingPage() {
   return (
@@ -19,6 +20,7 @@ export default async function PricingPage() {
           <Hero />
           <FirstSection />
           <SecondSection />
+          <FeaturesTitle />
           <FeatureOne />
           <FeatureTwo />
           <FeatureThree />

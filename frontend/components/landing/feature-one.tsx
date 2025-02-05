@@ -21,30 +21,33 @@ export default function FeatureOne() {
               variant="outline"
               className="mb-3.5 w-max px-4 py-2 text-foreground dark:border-none dark:bg-zinc-800 dark:text-white"
             >
-              FEATURE SECTION #1
+              STEP 1: DATA COLLECTION
             </Badge>
             <h1 className="mb-5 w-full max-w-full text-center text-[28px] font-extrabold leading-10 text-foreground dark:text-white md:w-[70%] md:max-w-[unset] md:text-[36px] md:leading-[50px] lg:w-[90%] lg:text-left xl:text-[42px] xl:leading-[52px]">
-              Ready to use Web App for your Startup project
+              A Decentralized, Collaborative Model
             </h1>
             <p className="mb-8 w-full text-center text-base font-normal leading-8 text-foreground dark:text-zinc-400 md:w-[80%] lg:w-[100%] lg:text-left">
-              It’s so easy to beat your endless procrastination when you have
-              all the necessary resources to get that project done and start to
-              generate your startup’s first dollar in just a few days.
+              We leverage a network of local legal experts and strategic partnerships to build 
+              the most comprehensive legal database in Latin America. Our collaborative approach 
+              ensures both depth and accuracy in legal information across jurisdictions.
             </p>
-            <div className="mb-0 flex w-full flex-col items-center justify-center md:flex-row lg:mb-8 lg:justify-start">
-              <Link className="me-5" href="/dashboard/main">
-                <Button className="mb-6 flex items-center justify-center px-4 py-7 text-sm font-medium md:mb-0">
-                  Explore the Dashboard
-                </Button>
-              </Link>
-              <Link className="me-5" href="/dashboard/main">
-                <Button
-                  variant="outline"
-                  className="mb-6 flex items-center justify-center px-4 py-7 text-sm font-medium dark:text-white md:mb-0"
-                >
-                  See pricing Plans
-                </Button>
-              </Link>
+            <div className="mb-0 flex w-full flex-col items-center justify-center space-y-4 md:flex-row md:space-x-4 md:space-y-0 lg:mb-8 lg:justify-start">
+              <div className="flex items-center space-x-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 dark:bg-zinc-800">
+                  <svg className="h-5 w-5 text-primary dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-foreground dark:text-white">Local Legal Expertise</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 dark:bg-zinc-800">
+                  <svg className="h-5 w-5 text-primary dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-foreground dark:text-white">Strategic Partnerships</span>
+              </div>
             </div>
           </div>
           <Image

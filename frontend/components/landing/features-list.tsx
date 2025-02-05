@@ -32,7 +32,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? nextjsdark.src : nextjs.src}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          NextJS 14
+          Exclusive Legal Databases
         </p>
       </div>
       <div className="flex h-[150px] w-[150px] flex-col items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800">
@@ -44,7 +44,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? tailwinddark : tailwind}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          Tailwind CSS
+          Updated Daily
         </p>
       </div>
       <div className="flex h-[150px] w-[150px] flex-col items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800">
@@ -56,7 +56,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? supabasedark : supabase}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          Supabase
+          AI-Powered Analysis
         </p>
       </div>
       <div className="flex h-[150px] w-[150px] flex-col items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800">
@@ -68,7 +68,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? shadcndark : shadcn}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          shadcn/ui
+          User-Friendly Interface
         </p>
       </div>
       <div className="flex h-[150px] w-[150px] flex-col items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800">
@@ -80,7 +80,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? horizondark : horizon}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          Horizon UI
+          LatAm Jurisdictions
         </p>
       </div>
       <div className="flex h-[150px] w-[150px] flex-col items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800">
@@ -92,7 +92,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? openaidark : openai}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          AI Integration
+          AI Agents
         </p>
       </div>
       <div className="flex h-[150px] w-[150px] flex-col items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800">
@@ -104,7 +104,7 @@ export default function FeaturesList() {
           src={theme === 'dark' ? oauthdark : oauth}
         />
         <p className="text-center font-bold text-foreground dark:text-white">
-          User Auth
+          Personalized Insights
         </p>
       </div>
     </div>
