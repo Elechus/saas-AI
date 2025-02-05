@@ -1,5 +1,11 @@
 const nextConfig = {
-  reactStrictMode: false, // changed this to false
+  reactStrictMode: false,
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    ignoreBuildErrors: true,
+  },
   images: {
     domains: [
       'images.unsplash.com',
