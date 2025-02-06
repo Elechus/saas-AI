@@ -63,10 +63,10 @@ export default function AdminNavbar(props) {
             mr-1.5 h-3 w-3 stroke-2 text-foreground dark:text-white"
             />
             <p className="h-full text-xs font-medium text-foreground dark:text-white">
-              Founded in EU. We respect your privacy.
+              Founded in Latin America. Specialized local research.
             </p>
           </div>
-          <div className="flex flex-row items-center">
+          {/* <div className="flex flex-row items-center">
             <HiStar
               className="
             mr-[1px] h-3 w-3 text-foreground dark:text-white"
@@ -99,7 +99,7 @@ export default function AdminNavbar(props) {
             <p className="h-full text-xs font-medium text-foreground dark:text-white">
               #1 ShadCN UI Template & Boilerplate
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
