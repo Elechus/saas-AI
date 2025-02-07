@@ -66,9 +66,15 @@ export class SearchDto {
   @IsString()
   challenged_authority?: string;
 
-  @IsOptional()
   @IsObject()
-  query?: Record<string, string>;
+  query: {
+    text?: string;
+    [key: string]: any;
+  };
+
+  @IsOptional()
+  @IsString()
+  model?: string;
 
   @IsOptional()
   @IsObject()
