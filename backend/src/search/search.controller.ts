@@ -1,14 +1,15 @@
-import { Controller, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, ValidationPipe, Get } from '@nestjs/common';
 import { SearchService } from './search.service';
 import { SearchDto } from './dto/search.dto';
 import { ApiOperation, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { OpenSearchService } from './services/opensearch.service';
 
 @ApiTags('Search')
 @Controller('search')
 export class SearchController {
-  constructor(private readonly searchService: SearchService) {}
+  constructor(private readonly searchService: SearchService, private readonly openSearchService: OpenSearchService) {}
 
-  @Post()
+  @Post('/structured')
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOperation({
     summary: 'Search documents',
@@ -52,7 +53,27 @@ export class SearchController {
       }
     }
   })
-  async search(@Body() filters: SearchDto) {
-    return this.searchService.searchDocuments(filters);
+  async search(@Body() payload: SearchDto) {
+    return this.searchService.searchDocuments(payload);
+  }
+
+  @Post('/semantic')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOperation({
+    summary: 'Search documents documents with semantic search',
+    description: 'Search legal documents with natural language questions supported by opensearch and a knowledge base RAG system'
+  })
+  async semanticSearch(@Body() payload: SearchDto) {
+    return this.searchService.semanticSearch(payload);
+  }
+
+  @Get('/indices')
+  async listIndices() {
+    return this.openSearchService.listIndices();
+  }
+
+  @Get('/mapping')
+  async getMapping() {
+    return this.openSearchService.getMapping('bedrock-knowledge-base-default-index');
   }
 } 
