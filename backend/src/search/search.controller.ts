@@ -1,8 +1,10 @@
-import { Controller, Post, Body, UsePipes, ValidationPipe, Get } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, ValidationPipe, Get, Param, Res, HttpException, HttpStatus } from '@nestjs/common';
 import { SearchService } from './search.service';
 import { SearchDto } from './dto/search.dto';
 import { ApiOperation, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { OpenSearchService } from './services/opensearch.service';
+import { Response } from 'express';
+import axios from 'axios';
 
 @ApiTags('Search')
 @Controller('search')
@@ -75,5 +77,23 @@ export class SearchController {
   @Get('/mapping')
   async getMapping() {
     return this.openSearchService.getMapping('bedrock-knowledge-base-default-index');
+  }
+
+  @Get('document/:documentId')
+  async getDocument(@Param('documentId') documentId: string, @Res() res: Response) {
+    try {
+      const response = await axios.get(documentId, {
+        responseType: 'stream'
+      });
+      
+      // Forward the content-type header
+      res.set('Content-Type', response.headers['content-type']);
+      
+      // Pipe the PDF stream to the response
+      response.data.pipe(res);
+    } catch (error) {
+      console.error('Error fetching document:', error);
+      throw new HttpException('Failed to fetch document', HttpStatus.BAD_REQUEST);
+    }
   }
 } 

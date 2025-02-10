@@ -1,10 +1,17 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+// Import styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 export interface IDocument {
   id: number;
   internal_id: string;
   file_name: string;
   file_paths: string[];
+  s3_file_paths?: string[];
   country: string;
   expedient: string;
   type: string;
@@ -27,6 +34,14 @@ interface DocumentDetailsProps {
 }
 
 export function DocumentDetailsContent({ document }: { document: IDocument }) {
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const originalPdfUrl = document.s3_file_paths?.[0];
+  
+  // Convert S3 URL to our proxy URL
+  const pdfUrl = originalPdfUrl ? 
+    `http://localhost:3080/api/search/document/${encodeURIComponent(originalPdfUrl)}` : 
+    null;
+
   return (
     <div className="grid gap-4">
       <div className="space-y-4">
@@ -80,6 +95,34 @@ export function DocumentDetailsContent({ document }: { document: IDocument }) {
           </div>
         </div>
       </div>
+
+      {/* PDF Viewer */}
+      {pdfUrl && (
+        <div className="mt-6">
+          <h4 className="mb-4 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
+            Document Preview
+          </h4>
+          <div className="h-[600px] w-full rounded-lg border border-zinc-200 dark:border-zinc-700">
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+              <Viewer
+                fileUrl={pdfUrl}
+                plugins={[defaultLayoutPluginInstance]}
+                defaultScale={1}
+                theme={{
+                  theme: 'light'
+                }}
+                onDocumentLoad={(e) => {
+                  if (e.doc) {
+                    console.log('PDF loaded successfully');
+                  } else {
+                    console.error('PDF failed to load');
+                  }
+                }}
+              />
+            </Worker>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -87,7 +130,7 @@ export function DocumentDetailsContent({ document }: { document: IDocument }) {
 export default function DocumentDetails({ document, isOpen, onClose }: DocumentDetailsProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[80vw]">
         <DialogHeader>
           <DialogTitle className="text-xl">{document.file_name}</DialogTitle>
         </DialogHeader>

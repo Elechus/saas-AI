@@ -38,7 +38,7 @@ export default function StickyHeader() {
     <motion.div 
       className="sticky top-0 z-50"
       animate={{
-        height: isScrolled ? '64px' : 'auto'
+        height: isScrolled ? '85px' : 'auto'
       }}
       transition={{
         duration: 0.2,
@@ -91,7 +91,7 @@ export default function StickyHeader() {
             ease: 'easeInOut'
           }}
         >
-          <div className="flex items-center gap-4 px-6 py-3">
+          <div className="flex items-center gap-4 px-6 py-4">
             <div className="shrink-0">
               <h2 className="text-xl font-bold text-foreground dark:text-white">
                 Elenchus
