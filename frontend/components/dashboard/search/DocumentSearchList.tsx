@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { HiLockClosed } from 'react-icons/hi2';
 import DocumentDetails, { IDocument } from './DocumentDetails';
 import { useSearch } from './SearchContext';
+import Pagination from './Pagination';
 
 const mockDocuments: IDocument[] = [
   {
@@ -40,8 +41,8 @@ export default function DocumentSearchList() {
   };
 
   return (
-    <div className="mt-8 grid grid-cols-12 gap-6">
-      {/* Sorting Options */}
+    <div className="min-h-[calc(100vh-200px)] mt-8 grid grid-cols-12 gap-6">
+      {/* Sorting Options - Fixed at top */}
       <div className="col-span-12 flex items-center justify-between border-b border-zinc-200 pb-4 dark:border-zinc-700">
         <div className="flex space-x-4">
           <button 
@@ -80,42 +81,52 @@ export default function DocumentSearchList() {
         </button>
       </div>
 
-      {/* Main Content Grid */}
+      {/* Main Content Grid with Scrollable Results */}
       <div className="col-span-9">
-        <div className="space-y-6">
-          {state.isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            state.results.map((doc) => (
-              <div
-                key={doc.id}
-                className="cursor-pointer rounded-lg border border-zinc-200 p-4 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800/50"
-                onClick={() => setSelectedDocument(doc)}
-              >
-                <h3 className="mb-2 text-lg font-semibold text-foreground dark:text-white">
-                  {doc.file_name}
-                </h3>
-                <div className="mb-2 flex flex-wrap gap-2">
-                  <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
-                    {doc.type}
-                  </span>
-                  <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400">
-                    {doc.expedient_type}
-                  </span>
-                </div>
-                <p className="mb-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  {doc.description}
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-500">
-                  Sentence Date: {new Date(doc.sentence_date).toLocaleDateString()}
-                </p>
-              </div>
-            ))
-          )}
+        <div className="flex h-[calc(100vh-380px)] flex-col">
+          {/* Scrollable Results */}
+          <div className="flex-1 overflow-y-auto pr-2">
+            <div className="space-y-6">
+              {state.isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                state.results.map((doc) => (
+                  <div
+                    key={doc.id}
+                    className="cursor-pointer rounded-lg border border-zinc-200 p-4 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800/50"
+                    onClick={() => setSelectedDocument(doc)}
+                  >
+                    <h3 className="mb-2 text-lg font-semibold text-foreground dark:text-white">
+                      {doc.file_name}
+                    </h3>
+                    <div className="mb-2 flex flex-wrap gap-2">
+                      <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                        {doc.type}
+                      </span>
+                      <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400">
+                        {doc.expedient_type}
+                      </span>
+                    </div>
+                    <p className="mb-2 text-sm text-zinc-600 dark:text-zinc-400">
+                      {doc.description}
+                    </p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-500">
+                      Sentence Date: {new Date(doc.sentence_date).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Pagination - Fixed at bottom of results */}
+          <div className="mt-4">
+            <Pagination />
+          </div>
         </div>
       </div>
 
-      {/* Filters Sidebar */}
+      {/* Filters Sidebar - Fixed */}
       <div className="col-span-3 space-y-6">
         <div className="rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
           <h3 className="mb-4 font-semibold text-foreground dark:text-white">Common</h3>

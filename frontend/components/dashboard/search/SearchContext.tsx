@@ -2,6 +2,15 @@ import { IDocument } from './DocumentDetails';
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 import axios from 'axios';
 
+interface PaginationMetadata {
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
 interface SearchState {
   query: string;
   filters: {
@@ -15,6 +24,7 @@ interface SearchState {
   pageSize: number;
   results: IDocument[];
   isLoading: boolean;
+  pagination: PaginationMetadata;
 }
 
 type SearchAction =
@@ -24,7 +34,8 @@ type SearchAction =
   | { type: 'SET_PAGE'; payload: number }
   | { type: 'SET_RESULTS'; payload: IDocument[] }
   | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'RESET_FILTERS' };
+  | { type: 'RESET_FILTERS' }
+  | { type: 'SET_PAGINATION'; payload: PaginationMetadata };
 
 const initialState: SearchState = {
   query: '',
@@ -36,6 +47,14 @@ const initialState: SearchState = {
   pageSize: 10,
   results: [],
   isLoading: false,
+  pagination: {
+    total: 0,
+    page: 1,
+    pageSize: 10,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false
+  }
 };
 
 const SearchContext = createContext<{
@@ -60,6 +79,8 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
       return { ...state, isLoading: action.payload };
     case 'RESET_FILTERS':
       return { ...initialState, query: state.query };
+    case 'SET_PAGINATION':
+      return { ...state, pagination: action.payload };
     default:
       return state;
   }
@@ -82,6 +103,7 @@ export function SearchProvider({ children }: { children: ReactNode }) {
       });
       
       dispatch({ type: 'SET_RESULTS', payload: response.data.data });
+      dispatch({ type: 'SET_PAGINATION', payload: response.data.metadata });
     } catch (error) {
       console.error('Search error:', error);
       dispatch({ type: 'SET_RESULTS', payload: [] });

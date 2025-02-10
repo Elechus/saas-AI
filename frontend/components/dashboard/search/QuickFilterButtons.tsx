@@ -32,15 +32,19 @@ export const quickFilterButtons = [
   }
 ];
 
-export default function QuickFilterButtons() {
+interface QuickFilterButtonsProps {
+  isCondensed?: boolean;
+}
+
+export default function QuickFilterButtons({ isCondensed }: QuickFilterButtonsProps) {
   return (
-    <div className="flex justify-center space-x-12">
+    <div className={`flex ${isCondensed ? 'space-x-4' : 'justify-center space-x-12'}`}>
       {quickFilterButtons.map((button, index) => (
-        <button key={index} className="flex flex-col items-center">
-          <div className={`rounded-full ${button.bgColor} p-3`}>
-            <button.icon className={`h-6 w-6 ${button.textColor}`} />
+        <button key={index} className="flex items-center space-x-2">
+          <div className={`rounded-full ${button.bgColor} ${isCondensed ? 'p-2' : 'p-3'}`}>
+            <button.icon className={`${button.textColor} ${isCondensed ? 'h-5 w-5' : 'h-6 w-6'}`} />
           </div>
-          <span className="mt-2 text-sm">{button.label}</span>
+          {!isCondensed && <span className="mt-2 text-sm">{button.label}</span>}
         </button>
       ))}
     </div>
