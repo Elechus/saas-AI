@@ -7,7 +7,8 @@ import {
   HiOutlineCurrencyDollar,
   HiOutlineDocumentText,
   HiOutlineHome,
-  HiOutlineUsers
+  HiOutlineUsers,
+  HiMagnifyingGlass
 } from 'react-icons/hi2';
 
 export const routes: IRoute[] = [
@@ -16,6 +17,12 @@ export const routes: IRoute[] = [
     path: '/dashboard/main',
     icon: <HiOutlineHome className="-mt-[7px] h-4 w-4 stroke-2 text-inherit" />,
     collapse: false
+  },
+  {
+    name: 'Search',
+    path: '/dashboard/search',
+    icon: <HiMagnifyingGlass className="-mt-[7px] h-4 w-4 stroke-2 text-inherit" />,
+    component: null,
   },
   {
     name: 'AI Pages',
