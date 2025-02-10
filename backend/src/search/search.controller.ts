@@ -48,7 +48,7 @@ export class SearchController {
           query: "amparo",
           country: "GT",
           page: 1,
-          pageSize: 20
+          pageSize: 2
         }
       }
     }

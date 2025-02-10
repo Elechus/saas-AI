@@ -3,12 +3,19 @@
 import { Input } from '@/components/ui/input';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 import { IoSettingsOutline } from 'react-icons/io5';
+import { useSearch } from './SearchContext';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useEffect } from 'react';
 
-interface SearchBarProps {
-  onSearch?: (query: string) => void;
-}
+export default function SearchBar() {
+  const { dispatch, performSearch } = useSearch();
+  const debouncedSearch = useDebounce(performSearch, 300);
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
+  const handleSearch = (value: string) => {
+    dispatch({ type: 'SET_QUERY', payload: value });
+    debouncedSearch();
+  };
+
   return (
     <div className="relative flex w-full items-center">
       <div className="relative w-full">
@@ -16,7 +23,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           type="text"
           placeholder="Search by keyword, document, case number, etc."
           className="h-14 w-full rounded-full border-zinc-300 pl-12 pr-24 text-lg dark:border-zinc-700"
-          onChange={(e) => onSearch?.(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
         />
         <HiMagnifyingGlass className="absolute left-4 top-1/2 h-6 w-6 -translate-y-1/2 text-zinc-400" />
       </div>
