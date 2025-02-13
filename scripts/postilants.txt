@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const postulantsCollection = "postulants";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the postulants collection if it already exists
+if (db[postulantsCollection].exists()) {
+    db[postulantsCollection].drop();
+}
+
+// Get unique postulant values
+const uniquePostulants = db[documentsCollection].distinct("postulant");
+
+// Insert the unique values into postulants collection with auto-incrementing id
+let idCounter = 1;
+const postulantsDocs = uniquePostulants.map(postulant => ({
+    id: idCounter++,
+    name: postulant
+}));
+
+db[postulantsCollection].insertMany(postulantsDocs);
+
+print("postulants collection created successfully with " + postulantsDocs.length + " records.");

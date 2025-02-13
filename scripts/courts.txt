@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const courtsCollection = "courts";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the courts collection if it already exists
+if (db[courtsCollection].exists()) {
+    db[courtsCollection].drop();
+}
+
+// Get unique court values
+const uniqueCourts = db[documentsCollection].distinct("court");
+
+// Insert the unique values into courts collection with auto-incrementing id
+let idCounter = 1;
+const courtsDocs = uniqueCourts.map(court => ({
+    id: idCounter++,
+    name: court
+}));
+
+db[courtsCollection].insertMany(courtsDocs);
+
+print("courts collection created successfully with " + courtsDocs.length + " records.");

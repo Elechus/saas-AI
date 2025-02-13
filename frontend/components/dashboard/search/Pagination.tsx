@@ -7,57 +7,88 @@ export default function Pagination() {
   const { pagination } = state;
 
   const handlePageChange = (newPage: number) => {
-    dispatch({ type: 'SET_PAGE', payload: newPage - 1 }); // API uses 0-based indexing
-    performSearch();
+    // Combine the page update and search into a single action
+    dispatch({ 
+      type: 'SET_PAGE_AND_SEARCH', 
+      payload: newPage 
+    });
+  };
+
+  // Calculate the range of results being shown
+  const startResult = ((pagination.page - 1) * pagination.pageSize) + 1;
+  const endResult = Math.min(pagination.page * pagination.pageSize, pagination.total);
+
+  // Create an array of page numbers to show
+  const getPageNumbers = () => {
+    const delta = 2; // Number of pages to show before and after current page
+    const range: number[] = [];
+    const rangeWithDots: (number | string)[] = [];
+    let l: number;
+
+    for (let i = 1; i <= pagination.totalPages; i++) {
+      if (
+        i === 1 || // First page
+        i === pagination.totalPages || // Last page
+        (i >= pagination.page - delta && i <= pagination.page + delta) // Pages around current page
+      ) {
+        range.push(i);
+      }
+    }
+
+    for (let i of range) {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push('...');
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
+    }
+
+    return rangeWithDots;
   };
 
   return (
-    <div className="mt-8 flex items-center justify-between border-t border-zinc-200 px-2 py-4 dark:border-zinc-700">
-      <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-        <span>
-          Showing {((pagination.page - 1) * pagination.pageSize) + 1} to{' '}
-          {Math.min(pagination.page * pagination.pageSize, pagination.total)} of{' '}
-          {pagination.total} results
-        </span>
+    <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-zinc-200 px-2 py-4 dark:border-zinc-700 sm:flex-row">
+      {/* Results count */}
+      <div className="text-sm text-zinc-600 dark:text-zinc-400">
+        Showing <span className="font-medium">{startResult}</span> to{' '}
+        <span className="font-medium">{endResult}</span> of{' '}
+        <span className="font-medium">{pagination.total}</span> results
       </div>
-      
+
+      {/* Pagination controls */}
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
           size="sm"
           onClick={() => handlePageChange(pagination.page - 1)}
           disabled={!pagination.hasPreviousPage}
-          className="h-8 w-8 p-0"
         >
           <HiChevronLeft className="h-4 w-4" />
+          <span className="sr-only">Previous page</span>
         </Button>
 
-        {/* Page numbers */}
         <div className="flex items-center gap-1">
-          {[...Array(Math.min(5, pagination.totalPages))].map((_, idx) => {
-            let pageNumber: number;
-            if (pagination.totalPages <= 5) {
-              pageNumber = idx + 1;
-            } else if (pagination.page <= 3) {
-              pageNumber = idx + 1;
-            } else if (pagination.page >= pagination.totalPages - 2) {
-              pageNumber = pagination.totalPages - (4 - idx);
-            } else {
-              pageNumber = pagination.page - 2 + idx;
-            }
-
-            return (
+          {getPageNumbers().map((pageNumber, idx) => (
+            typeof pageNumber === 'number' ? (
               <Button
-                key={pageNumber}
-                variant={pagination.page === pageNumber ? "default" : "outline"}
+                key={idx}
+                variant={pageNumber === pagination.page ? "default" : "outline"}
                 size="sm"
                 onClick={() => handlePageChange(pageNumber)}
-                className="h-8 w-8 p-0"
+                className="min-w-[2rem]"
               >
                 {pageNumber}
               </Button>
-            );
-          })}
+            ) : (
+              <span key={idx} className="px-2 text-zinc-400">
+                {pageNumber}
+              </span>
+            )
+          ))}
         </div>
 
         <Button
@@ -65,9 +96,9 @@ export default function Pagination() {
           size="sm"
           onClick={() => handlePageChange(pagination.page + 1)}
           disabled={!pagination.hasNextPage}
-          className="h-8 w-8 p-0"
         >
           <HiChevronRight className="h-4 w-4" />
+          <span className="sr-only">Next page</span>
         </Button>
       </div>
     </div>

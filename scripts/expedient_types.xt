@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const expedientTypesCollection = "expedient_types";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the expedient_types collection if it already exists
+if (db[expedientTypesCollection].exists()) {
+    db[expedientTypesCollection].drop();
+}
+
+// Get unique expedient_type values
+const uniqueExpedientTypes = db[documentsCollection].distinct("expedient_type");
+
+// Insert the unique values into expedient_types collection with auto-incrementing id
+let idCounter = 1;
+const expedientTypesDocs = uniqueExpedientTypes.map(type => ({
+    id: idCounter++,
+    name: type
+}));
+
+db[expedientTypesCollection].insertMany(expedientTypesDocs);
+
+print("expedient_types collection created successfully with " + expedientTypesDocs.length + " records.");

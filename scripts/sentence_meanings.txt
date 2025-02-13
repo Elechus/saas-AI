@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const sentenceMeaningsCollection = "sentence_meanings";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the sentence_meanings collection if it already exists
+if (db[sentenceMeaningsCollection].exists()) {
+    db[sentenceMeaningsCollection].drop();
+}
+
+// Get unique sentence_meaning values
+const uniqueSentenceMeanings = db[documentsCollection].distinct("sentence_meaning");
+
+// Insert the unique values into sentence_meanings collection with auto-incrementing id
+let idCounter = 1;
+const sentenceMeaningsDocs = uniqueSentenceMeanings.map(meaning => ({
+    id: idCounter++,
+    name: meaning
+}));
+
+db[sentenceMeaningsCollection].insertMany(sentenceMeaningsDocs);
+
+print("sentence_meanings collection created successfully with " + sentenceMeaningsDocs.length + " records.");
