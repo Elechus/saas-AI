@@ -1,0 +1,41 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+const batchSize = 1000; // Process in batches of 1000
+let processedCount = 0;
+
+// Create a cursor to iterate over documents
+const cursor = db[documentsCollection].find({ sentence_date: { $type: "string" } });
+
+let bulkOps = [];
+
+while (cursor.hasNext()) {
+    const doc = cursor.next();
+    if (doc.sentence_date) {
+        bulkOps.push({
+            updateOne: {
+                filter: { _id: doc._id },
+                update: { $set: { sentence_mongodate: new Date(doc.sentence_date) } }
+            }
+        });
+    }
+
+    // Execute batch update every 1000 records
+    if (bulkOps.length >= batchSize) {
+        db[documentsCollection].bulkWrite(bulkOps);
+        processedCount += bulkOps.length;
+        print(processedCount + " documents updated...");
+        bulkOps = [];
+    }
+}
+
+// Final batch execution for remaining records
+if (bulkOps.length > 0) {
+    db[documentsCollection].bulkWrite(bulkOps);
+    processedCount += bulkOps.length;
+}
+
+print("Completed updating " + processedCount + " documents with sentence_mongodate.");

@@ -1,5 +1,15 @@
-import { IsOptional, IsString, IsNumber, IsDate, Min, Max, IsObject } from 'class-validator';
+import { IsOptional, IsString, IsNumber, IsDate, Min, Max, IsObject, IsEnum } from 'class-validator';
 import { Transform } from 'class-transformer';
+
+export enum SortOption {
+  RELEVANCE = 'relevance',
+  SENTENCE_DATE_ASC = 'sentence_date_asc',
+  SENTENCE_DATE_DESC = 'sentence_date_desc',
+  UPDATED_AT_ASC = 'updated_at_asc',
+  UPDATED_AT_DESC = 'updated_at_desc',
+  EXPEDIENT_ASC = 'expedient_asc',
+  EXPEDIENT_DESC = 'expedient_desc'
+}
 
 export class SearchDto {
   @IsOptional()
@@ -92,4 +102,8 @@ export class SearchDto {
   @Max(100)
   @Transform(({ value }) => parseInt(value) || 20)
   pageSize: number = 20;
+
+  @IsOptional()
+  @IsEnum(SortOption)
+  sort: SortOption = SortOption.RELEVANCE;
 } 

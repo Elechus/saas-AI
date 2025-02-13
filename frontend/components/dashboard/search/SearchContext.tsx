@@ -1,5 +1,5 @@
 import { IDocument } from './DocumentDetails';
-import { createContext, useContext, useReducer, ReactNode } from 'react';
+import { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import axios from 'axios';
 
 interface PaginationMetadata {
@@ -11,6 +11,11 @@ interface PaginationMetadata {
   hasPreviousPage: boolean;
 }
 
+export type SortOption = 'relevance' | 
+  'sentence_date_asc' | 'sentence_date_desc' |
+  'updated_at_asc' | 'updated_at_desc' |
+  'expedient_asc' | 'expedient_desc';
+
 interface SearchState {
   query: string;
   filters: {
@@ -18,13 +23,19 @@ interface SearchState {
     type?: string;
     expedient_type?: string;
     published?: boolean;
+    sentence_mongodate?: {
+      $eq?: string;
+      $gte?: string;
+      $lte?: string;
+    };
   };
-  sort: 'relevance' | 'recent' | 'least_recent';
+  sort: SortOption;
   page: number;
   pageSize: number;
   results: IDocument[];
   isLoading: boolean;
   pagination: PaginationMetadata;
+  shouldSearch: boolean;
 }
 
 type SearchAction =
@@ -32,15 +43,17 @@ type SearchAction =
   | { type: 'SET_FILTER'; payload: Partial<SearchState['filters']> }
   | { type: 'SET_SORT'; payload: SearchState['sort'] }
   | { type: 'SET_PAGE'; payload: number }
+  | { type: 'SET_PAGE_AND_SEARCH'; payload: number }
   | { type: 'SET_RESULTS'; payload: IDocument[] }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'RESET_FILTERS' }
-  | { type: 'SET_PAGINATION'; payload: PaginationMetadata };
+  | { type: 'SET_PAGINATION'; payload: PaginationMetadata }
+  | { type: 'RESET_SEARCH_FLAG' };
 
 const initialState: SearchState = {
   query: '',
   filters: {
-    country: 'GT',
+    // country: 'GT',
   },
   sort: 'relevance',
   page: 0,
@@ -54,7 +67,8 @@ const initialState: SearchState = {
     totalPages: 0,
     hasNextPage: false,
     hasPreviousPage: false
-  }
+  },
+  shouldSearch: false
 };
 
 const SearchContext = createContext<{
@@ -63,7 +77,7 @@ const SearchContext = createContext<{
   performSearch: () => Promise<void>;
 } | null>(null);
 
-function searchReducer(state: SearchState, action: SearchAction): SearchState {
+export function searchReducer(state: SearchState, action: SearchAction): SearchState {
   switch (action.type) {
     case 'SET_QUERY':
       return { ...state, query: action.payload };
@@ -72,7 +86,22 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
     case 'SET_SORT':
       return { ...state, sort: action.payload };
     case 'SET_PAGE':
-      return { ...state, page: action.payload };
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          page: action.payload
+        }
+      };
+    case 'SET_PAGE_AND_SEARCH':
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          page: action.payload
+        },
+        shouldSearch: true
+      };
     case 'SET_RESULTS':
       return { ...state, results: action.payload };
     case 'SET_LOADING':
@@ -81,6 +110,8 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
       return { ...initialState, query: state.query };
     case 'SET_PAGINATION':
       return { ...state, pagination: action.payload };
+    case 'RESET_SEARCH_FLAG':
+      return { ...state, shouldSearch: false };
     default:
       return state;
   }
@@ -88,6 +119,13 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
 
 export function SearchProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(searchReducer, initialState);
+
+  useEffect(() => {
+    if (state.shouldSearch) {
+      performSearch();
+      dispatch({ type: 'RESET_SEARCH_FLAG' });
+    }
+  }, [state.shouldSearch]);
 
   const performSearch = async () => {
     dispatch({ type: 'SET_LOADING', payload: true });
@@ -97,8 +135,8 @@ export function SearchProvider({ children }: { children: ReactNode }) {
           ...state.filters,
           text: state.query || undefined
         },
-        page: state.page,
-        pageSize: state.pageSize,
+        page: state.pagination.page,
+        pageSize: state.pagination.pageSize,
         sort: state.sort
       });
       

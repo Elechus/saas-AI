@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const antecedentTypesCollection = "antecedent_types";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the antecedent_types collection if it already exists
+if (db[antecedentTypesCollection].exists()) {
+    db[antecedentTypesCollection].drop();
+}
+
+// Get unique antecedent_type values
+const uniqueAntecedentTypes = db[documentsCollection].distinct("antecedent_type");
+
+// Insert the unique values into antecedent_types collection with auto-incrementing id
+let idCounter = 1;
+const antecedentTypesDocs = uniqueAntecedentTypes.map(type => ({
+    id: idCounter++,
+    name: type
+}));
+
+db[antecedentTypesCollection].insertMany(antecedentTypesDocs);
+
+print("antecedent_types collection created successfully with " + antecedentTypesDocs.length + " records.");

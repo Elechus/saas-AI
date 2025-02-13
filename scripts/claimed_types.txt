@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const claimedTypesCollection = "claimed_types";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the claimed_types collection if it already exists
+if (db[claimedTypesCollection].exists()) {
+    db[claimedTypesCollection].drop();
+}
+
+// Get unique claimed_type values
+const uniqueClaimedTypes = db[documentsCollection].distinct("claimed_type");
+
+// Insert the unique values into claimed_types collection with auto-incrementing id
+let idCounter = 1;
+const claimedTypesDocs = uniqueClaimedTypes.map(type => ({
+    id: idCounter++,
+    name: type
+}));
+
+db[claimedTypesCollection].insertMany(claimedTypesDocs);
+
+print("claimed_types collection created successfully with " + claimedTypesDocs.length + " records.");

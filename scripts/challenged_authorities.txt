@@ -1,0 +1,25 @@
+const dbName = "prod";
+const documentsCollection = "documents";
+const challengedAuthoritiesCollection = "challenged_authorities";
+
+// Connect to the database
+const db = db.getSiblingDB(dbName);
+
+// Drop the challenged_authorities collection if it already exists
+if (db[challengedAuthoritiesCollection].exists()) {
+    db[challengedAuthoritiesCollection].drop();
+}
+
+// Get unique challenged_authority values
+const uniqueChallengedAuthorities = db[documentsCollection].distinct("challenged_authority");
+
+// Insert the unique values into challenged_authorities collection with auto-incrementing id
+let idCounter = 1;
+const challengedAuthoritiesDocs = uniqueChallengedAuthorities.map(authority => ({
+    id: idCounter++,
+    name: authority
+}));
+
+db[challengedAuthoritiesCollection].insertMany(challengedAuthoritiesDocs);
+
+print("challenged_authorities collection created successfully with " + challengedAuthoritiesDocs.length + " records.");

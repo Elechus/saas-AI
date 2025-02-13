@@ -1,11 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, SortOrder } from 'mongoose';
 import { DocumentEntity } from './schemas/document.schema';
 import { SearchDto } from './dto/search.dto';
 import { SearchResponseDto } from './dto/search-response.dto';
 import { OpenSearchService } from './services/opensearch.service';
 import { EmbeddingsService } from './services/embeddings.service';
+import { SortOption } from './dto/search.dto';
 
 @Injectable()
 export class SearchService {
@@ -42,13 +43,36 @@ export class SearchService {
         Object.assign(query, filters.customQuery);
       }
       
+      const getSortOptions = (sort: SortOption): Record<string, SortOrder> => {
+        switch (sort) {
+          case SortOption.RELEVANCE:
+            return {id: 1};
+          case SortOption.SENTENCE_DATE_ASC:
+            return { sentence_date: 1 };
+          case SortOption.SENTENCE_DATE_DESC:
+            return { sentence_date: -1 };
+          case SortOption.UPDATED_AT_ASC:
+            return { updated_at: 1 };
+          case SortOption.UPDATED_AT_DESC:
+            return { updated_at: -1 };
+          case SortOption.EXPEDIENT_ASC:
+            return { expedient: 1 };
+          case SortOption.EXPEDIENT_DESC:
+            return { expedient: -1 };
+          default:
+            return {};
+        }
+      };
+
+      const sortOptions = getSortOptions(filters.sort);
+
       const [total, results] = await Promise.all([
         this.documentModel.countDocuments(query),
         this.documentModel
           .find(query)
+          .sort(sortOptions)
           .skip((filters.page - 1) * filters.pageSize)
           .limit(filters.pageSize)
-          .sort({ sentence_date: -1 })
           .exec(),
       ]);
 
