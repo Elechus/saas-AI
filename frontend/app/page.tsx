@@ -7,7 +7,7 @@ import FeatureThree from '@/components/landing/feature-three';
 import FeatureTwo from '@/components/landing/feature-two';
 import FirstSection from '@/components/landing/first-section';
 import Hero from '@/components/landing/hero';
-import Newsletter from '@/components/landing/newsletter';
+//import Newsletter from '@/components/landing/newsletter';
 import SecondSection from '@/components/landing/second-section';
 import NavbarFixed from '@/components/navbar/NavbarFixed';
 import FeaturesTitle from '@/components/landing/features-title';
@@ -25,7 +25,7 @@ export default async function PricingPage() {
           <FeatureTwo />
           <FeatureThree />
           <Faq />
-          <Newsletter />
+          {/*<Newsletter />*/}
         </div>
         <FooterWebsite />
       </div>
