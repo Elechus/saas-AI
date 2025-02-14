@@ -1,10 +1,6 @@
 'use client';
 
-import { Badge } from '@/components/ui/badge';
-import herodark from '@/public/img/dark/hero/hero-image.png';
-import herolight from '@/public/img/light/hero/hero-image.png';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 
@@ -13,51 +9,37 @@ export default function Hero() {
 
   return (
     <div
-      className="relative mx-auto mt-12 flex w-[96vw] flex-col content-center items-center rounded-lg 
-   bg-[linear-gradient(180deg,_#FFF_0%,_#F4F4F5_100%)] dark:bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.10)_100%)] md:mt-[90px]
-   md:rounded-2xl lg:mt-[103px] 2xl:w-[94vw]"
+      className="relative mx-auto mt-24 flex w-full max-w-[1600px] flex-col content-center items-center rounded-lg 
+   bg-[linear-gradient(180deg,_#FFF_0%,_#F4F4F5_100%)] dark:bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.10)_100%)] md:mt-[100px]
+   md:rounded-2xl lg:mt-[140px] p-24"
     >
       <div className="flex w-full">
-        <div className="3xl:pt-[200px] mb-0 flex w-[stretch] max-w-full flex-row content-center items-center justify-between pt-20 lg:pt-[120px]">
+        <div className="3xl:pt-[200px] mb-0 flex w-full max-w-full flex-row content-center items-center justify-between pt-24 lg:pt-[140px]">
           <div className="mx-auto flex w-full flex-col text-center">
-            <Badge
-              variant="outline"
-              className="mx-auto w-max px-4 py-2 text-foreground dark:border-none dark:bg-zinc-800 dark:text-white"
-            >
-              Transforming Legal Intelligence in Latin America
-            </Badge>
-            <h1 className="3xl:text-6xl z-[40] mx-auto mb-6 mt-4 max-w-[94%] text-3xl font-bold leading-[36px] text-foreground dark:text-white md:max-w-[70%] md:text-[50px] md:leading-[60px] lg:max-w-[76%] lg:text-[50px] lg:leading-[68px] xl:max-w-[60%] 2xl:max-w-[48%] 2xl:text-[50px] 2xl:leading-[68px]">
-              Navigate Latin American Legal Complexities with Confidence
+            <h1 className="3xl:text-6xl z-[40] mx-auto mb-6 mt-4 max-w-full text-3xl font-bold leading-[48px] text-foreground dark:text-white md:text-[50px] md:leading-[68px] lg:text-[50px] lg:leading-[76px]">
+              Data-Driven Legal Insights for Latin America
             </h1>
-            <h5 className="mb-8 w-[96%] self-center text-base font-normal leading-8 text-foreground dark:text-zinc-400 md:mb-10 md:w-[82%] lg:w-[62%] xl:w-[50%] xl:text-lg xl:leading-[32px] 2xl:w-[44%] 2xl:text-lg 2xl:leading-[32px]">
-              Leverage our cutting-edge platform to analyze precedents from arbitral tribunals, 
-              judicial decisions, and governmental rulings. Make informed legal decisions with 
-              advanced search capabilities and powerful analytics that enhance transparency 
-              and predictability across Latin American jurisdictions.
-            </h5>
-            <div className="mx-auto flex items-center justify-center">
-              <Link className="me-2 md:me-5" href="/dashboard/main">
-                <Button className="mb-6 flex items-center justify-center px-4 py-7 text-sm font-medium md:mb-0">
-                  Explore Our Platform
+            <div className="mx-auto mb-12 w-full max-w-md">
+              <input
+                type="text"
+                placeholder="Search by keyword, document, case number, etc."
+                className="w-full rounded-md border border-gray-300 p-4 text-sm focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+            <div className="mx-auto flex items-center justify-center space-x-12">
+              <Link href="/dashboard/main">
+                <Button className="mb-12 flex items-center justify-center px-10 py-5 text-sm font-medium md:mb-0">
+                  Case Law
                 </Button>
               </Link>
               <Link href="/dashboard/main">
                 <Button
                   variant="outline"
-                  className="mb-6 flex items-center justify-center px-4 py-7 text-sm font-medium dark:text-white md:mb-0"
+                  className="mb-12 flex items-center justify-center px-10 py-5 text-sm font-medium dark:text-white md:mb-0"
                 >
-                  Request Demo
+                  Publications
                 </Button>
               </Link>
-            </div>
-            <div className="relative mx-auto flex max-w-[335px] justify-center md:mt-[10px] md:max-w-[660px] lg:mt-[80px] lg:max-w-[900px] xl:max-w-[1170px]">
-              <Image
-                src={theme === 'dark' ? herodark.src : herolight.src}
-                width={1164}
-                height={692}
-                alt=""
-                className="mt-10 max-h-max w-full max-w-[335px] md:mt-12 md:max-w-[660px] lg:mt-0 lg:max-w-[900px] xl:max-w-[1170px]"
-              />
             </div>
           </div>
         </div>
