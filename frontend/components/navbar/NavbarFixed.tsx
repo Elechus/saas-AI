@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { HiOutlineMoon, HiOutlineSun } from 'react-icons/hi2';
 import Image from 'next/image';
 
-export default function AdminNavbar(props) {
+export default function AdminNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   
@@ -26,7 +26,7 @@ export default function AdminNavbar(props) {
   }, []);
 
   const changeNavbar = () => {
-    setScrolled(window.scrollY > 1);
+    setScrolled(window.scrollY > 50);
   };
 
   if (!mounted) {
@@ -35,63 +35,48 @@ export default function AdminNavbar(props) {
 
   return (
     <div
-      className={`fixed left-[50%] top-0 z-[49] mx-auto flex w-full translate-x-[-50%] translate-y-0 flex-col items-center border-gray-300 bg-white leading-[25.6px] dark:border-white dark:bg-zinc-950 xl:justify-center`}
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white shadow-md dark:bg-zinc-900' : 'bg-transparent'}`}
     >
-      <div className="mb-0 flex w-[calc(100vw_-_4%)] flex-row items-center justify-between gap-[40px] py-5 sm:px-6 md:w-[calc(100vw_-_4%)] md:px-2.5 lg:w-[100vw] lg:px-3 xl:w-[calc(100vw_-_250px)] xl:pl-3 2xl:w-[1200px]">
+      <div className="container mx-auto flex items-center justify-between px-6 py-6 md:px-12 lg:px-20">
         {/* LOGO + TEXTO */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src={theme === 'light' ? '/img/light/logo/logo_black.png' : '/img/dark/logo/logo_white.png'}
-              alt="Elenchus Logo"
-              width={40}
-              height={40}
-            />
-            <div className="ml-2">
-              <h5 className="text-2xl font-bold text-foreground dark:text-white">
-                Elenchus
-              </h5>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Legal Research, Data-Driven Decisions
-              </p>
+        <Link href="/" className="flex items-center space-x-3">
+          <Image
+            src={theme === 'light' ? '/img/light/logo/logo_black.png' : '/img/dark/logo/logo_white.png'}
+            alt="Elenchus Logo"
+            width={50}
+            height={50}
+          />
+          <div>
+            <h5 className="text-2xl font-bold text-foreground dark:text-white">Elenchus</h5>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Legal Research, Data-Driven Decisions</p>
           </div>
         </Link>
 
-        {/* NAV LINKS */}
-        <div className="flex items-center">
-          <Link className="my-auto mr-[30px] hidden text-sm font-medium text-foreground dark:text-white lg:block" href="/solutions">
-            Solutions
-          </Link>
-          <Link className="my-auto mr-[30px] hidden text-sm font-medium text-foreground dark:text-white lg:block" href="/pricing">
-            Pricing
-          </Link>
-          <Link className="my-auto mr-[30px] hidden text-sm font-medium text-foreground dark:text-white lg:block" href="/about">
-            About Us
-          </Link>
-          <Link className="my-auto mr-[30px] hidden text-sm font-medium text-foreground dark:text-white lg:block" href="#faqs">
-            FAQs
-          </Link>
+        {/* NAVIGATION LINKS */}
+        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-foreground dark:text-white">
+          <Link href="/solutions" className="hover:text-gray-500 transition-all">Solutions</Link>
+          <Link href="/pricing" className="hover:text-gray-500 transition-all">Pricing</Link>
+          <Link href="/about" className="hover:text-gray-500 transition-all">About Us</Link>
+          <Link href="#faqs" className="hover:text-gray-500 transition-all">FAQs</Link>
+        </nav>
 
-          {/* THEME SWITCHER */}
+        {/* ACTION BUTTONS */}
+        <div className="flex items-center space-x-6">
           <Button
             variant="outline"
-            className="me-3 flex min-h-10 min-w-10 cursor-pointer rounded-full border-zinc-200 p-0 text-xl text-foreground dark:border-zinc-800 dark:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-zinc-200 dark:border-zinc-800"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           >
             {theme === 'light' ? (
-              <HiOutlineMoon className="h-4 w-4 stroke-2" />
+              <HiOutlineMoon className="h-5 w-5 stroke-2" />
             ) : (
-              <HiOutlineSun className="h-5 w-5 stroke-2" />
+              <HiOutlineSun className="h-6 w-6 stroke-2" />
             )}
           </Button>
-          {/* LANGUAGE + LOGIN */}
-          <span className="text-sm font-medium text-foreground dark:text-white">EN</span>
-          <Link href="/login" className="ml-4 text-sm font-medium text-foreground dark:text-white">
-            Login
-          </Link>
-          <Link href="/book-demo" className="ml-4">
-            <Button variant="outline" className="py-2 px-4 dark:text-white">
-              BOOK A DEMO
-            </Button>
+          <span className="hidden text-sm font-medium text-foreground dark:text-white md:block">EN</span>
+          <Link href="/login" className="hidden text-sm font-medium text-foreground dark:text-white md:block">Login</Link>
+          <Link href="/book-demo">
+            <Button variant="outline" className="px-5 py-2 text-sm font-medium">BOOK A DEMO</Button>
           </Link>
         </div>
       </div>
