@@ -38,28 +38,25 @@ export default function AdminNavbar(props) {
       className={`fixed left-[50%] top-0 z-[49] mx-auto flex w-full translate-x-[-50%] translate-y-0 flex-col items-center border-gray-300 bg-white leading-[25.6px] dark:border-white dark:bg-zinc-950 xl:justify-center`}
     >
       <div className="mb-0 flex w-[calc(100vw_-_4%)] flex-row items-center justify-between gap-[40px] py-5 sm:px-6 md:w-[calc(100vw_-_4%)] md:px-2.5 lg:w-[100vw] lg:px-3 xl:w-[calc(100vw_-_250px)] xl:pl-3 2xl:w-[1200px]">
-        <Link className="flex items-center justify-center" href="/">
-          <div className="flex items-center justify-center">
-            <div className="me-2 flex h-[40px] w-[40px] items-center justify-center rounded-md">
-              <Image
-                src={theme === 'light' ? '/img/light/logo/logo_black.png' : '/img/dark/logo/logo_white.png'}
-                alt="Logo"
-                width={40}
-                height={40}
-                priority
-              />
-            </div>
-            <div>
-              <h5 className="text-2xl font-bold leading-5 text-foreground dark:text-white">
+        {/* LOGO + TEXTO */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src={theme === 'light' ? '/img/light/logo/logo_black.png' : '/img/dark/logo/logo_white.png'}
+              alt="Elenchus Logo"
+              width={40}
+              height={40}
+            />
+            <div className="ml-2">
+              <h5 className="text-2xl font-bold text-foreground dark:text-white">
                 Elenchus
               </h5>
-              <p className="text-sm text-foreground dark:text-white">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Legal Research, Data-Driven Decisions
               </p>
-            </div>
           </div>
         </Link>
 
+        {/* NAV LINKS */}
         <div className="flex items-center">
           <Link className="my-auto mr-[30px] hidden text-sm font-medium text-foreground dark:text-white lg:block" href="/solutions">
             Solutions
@@ -74,6 +71,7 @@ export default function AdminNavbar(props) {
             FAQs
           </Link>
 
+          {/* THEME SWITCHER */}
           <Button
             variant="outline"
             className="me-3 flex min-h-10 min-w-10 cursor-pointer rounded-full border-zinc-200 p-0 text-xl text-foreground dark:border-zinc-800 dark:text-white"
@@ -85,6 +83,7 @@ export default function AdminNavbar(props) {
               <HiOutlineSun className="h-5 w-5 stroke-2" />
             )}
           </Button>
+          {/* LANGUAGE + LOGIN */}
           <span className="text-sm font-medium text-foreground dark:text-white">EN</span>
           <Link href="/login" className="ml-4 text-sm font-medium text-foreground dark:text-white">
             Login
