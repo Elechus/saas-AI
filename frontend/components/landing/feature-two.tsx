@@ -1,3 +1,4 @@
+{/*
 'use client';
 
 import InnerContent from '@/components/layout/innerContent';
@@ -69,3 +70,4 @@ export default function FeatureTwo() {
     </div>
   );
 }
+*/}

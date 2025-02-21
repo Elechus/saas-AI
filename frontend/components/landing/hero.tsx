@@ -1,67 +1,95 @@
 'use client';
 
-import { Badge } from '@/components/ui/badge';
-import herodark from '@/public/img/dark/hero/hero-image.png';
-import herolight from '@/public/img/light/hero/hero-image.png';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '../ui/button';
+import { motion } from 'framer-motion';
+import { HiOutlineSearch } from 'react-icons/hi';
 
 export default function Hero() {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div
-      className="relative mx-auto mt-12 flex w-[96vw] flex-col content-center items-center rounded-lg 
-   bg-[linear-gradient(180deg,_#FFF_0%,_#F4F4F5_100%)] dark:bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.10)_100%)] md:mt-[90px]
-   md:rounded-2xl lg:mt-[103px] 2xl:w-[94vw]"
+      className="relative mx-auto flex w-full min-h-screen flex-col items-center justify-center 
+      bg-[linear-gradient(180deg,_#ffffff_0%,_#f8f8f8_100%)] 
+      dark:bg-[linear-gradient(180deg,_rgba(25,_25,_25,_1)_0%,_rgba(15,_15,_15,_1)_100%)]"
     >
-      <div className="flex w-full">
-        <div className="3xl:pt-[200px] mb-0 flex w-[stretch] max-w-full flex-row content-center items-center justify-between pt-20 lg:pt-[120px]">
-          <div className="mx-auto flex w-full flex-col text-center">
-            <Badge
-              variant="outline"
-              className="mx-auto w-max px-4 py-2 text-foreground dark:border-none dark:bg-zinc-800 dark:text-white"
-            >
-              Transforming Legal Intelligence in Latin America
-            </Badge>
-            <h1 className="3xl:text-6xl z-[40] mx-auto mb-6 mt-4 max-w-[94%] text-3xl font-bold leading-[36px] text-foreground dark:text-white md:max-w-[70%] md:text-[50px] md:leading-[60px] lg:max-w-[76%] lg:text-[50px] lg:leading-[68px] xl:max-w-[60%] 2xl:max-w-[48%] 2xl:text-[50px] 2xl:leading-[68px]">
-              Navigate Latin American Legal Complexities with Confidence
-            </h1>
-            <h5 className="mb-8 w-[96%] self-center text-base font-normal leading-8 text-foreground dark:text-zinc-400 md:mb-10 md:w-[82%] lg:w-[62%] xl:w-[50%] xl:text-lg xl:leading-[32px] 2xl:w-[44%] 2xl:text-lg 2xl:leading-[32px]">
-              Leverage our cutting-edge platform to analyze precedents from arbitral tribunals, 
-              judicial decisions, and governmental rulings. Make informed legal decisions with 
-              advanced search capabilities and powerful analytics that enhance transparency 
-              and predictability across Latin American jurisdictions.
-            </h5>
-            <div className="mx-auto flex items-center justify-center">
-              <Link className="me-2 md:me-5" href="/dashboard/main">
-                <Button className="mb-6 flex items-center justify-center px-4 py-7 text-sm font-medium md:mb-0">
-                  Explore Our Platform
-                </Button>
-              </Link>
-              <Link href="/dashboard/main">
-                <Button
-                  variant="outline"
-                  className="mb-6 flex items-center justify-center px-4 py-7 text-sm font-medium dark:text-white md:mb-0"
-                >
-                  Request Demo
-                </Button>
-              </Link>
-            </div>
-            <div className="relative mx-auto flex max-w-[335px] justify-center md:mt-[10px] md:max-w-[660px] lg:mt-[80px] lg:max-w-[900px] xl:max-w-[1170px]">
-              <Image
-                src={theme === 'dark' ? herodark.src : herolight.src}
-                width={1164}
-                height={692}
-                alt=""
-                className="mt-10 max-h-max w-full max-w-[335px] md:mt-12 md:max-w-[660px] lg:mt-0 lg:max-w-[900px] xl:max-w-[1170px]"
-              />
-            </div>
+      {/* Contenedor principal con animación de entrada */}
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="flex w-full max-w-[1200px] flex-col items-center text-center px-6 md:px-12 lg:px-16"
+      >
+        {/* Título con animación de entrada */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-4xl font-extrabold leading-tight text-foreground dark:text-white md:text-6xl lg:text-[72px] tracking-tight"
+        >
+          Data-Driven Legal Insights for Latin America
+        </motion.h1>
+
+        {/* Subtítulo con animación sutil */}
+        <motion.p 
+          initial={{ opacity: 0, y: 15 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-6 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl"
+        >
+          The most comprehensive legal database in Latin America, enhanced with AI for unparalleled research capabilities.
+        </motion.p>
+
+        {/* Campo de búsqueda con fondo negro en modo oscuro */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-12 w-full max-w-2xl relative"
+        >
+          <input
+            type="text"
+            placeholder="Search by keyword, document, case number..."
+            className="w-full rounded-lg border border-gray-300 bg-white p-5 text-lg shadow-md 
+            transition-all duration-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 
+            focus:outline-none dark:bg-black dark:border-gray-700 dark:text-white dark:focus:ring-gray-600"
+          />
+          <div className="absolute inset-y-0 right-5 flex items-center">
+            <HiOutlineSearch className="text-gray-500 dark:text-gray-400 h-6 w-6" />
           </div>
-        </div>
-      </div>
+        </motion.div>
+
+        {/* Botones con hover animado y fondo blanco en modo oscuro */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          transition={{ duration: 0.7, delay: 0.6 }}
+          className="mt-12 flex space-x-6"
+        >
+          <Link href="/dashboard/main">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button className="px-10 py-5 text-lg font-medium shadow-md 
+              hover:shadow-lg transition-all duration-300 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+                Case Law
+              </Button>
+            </motion.div>
+          </Link>
+          <Link href="/dashboard/main">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                className="px-10 py-5 text-lg font-medium dark:bg-white dark:text-black shadow-md 
+                border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-200 
+                transition-all duration-300"
+              >
+                Publications
+              </Button>
+            </motion.div>
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

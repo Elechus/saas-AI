@@ -1,119 +1,130 @@
 'use client';
 
-import numbersdark from '@/public/img/dark/numbers/image.png';
-import numberslight from '@/public/img/light/numbers/image.png';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import Link from 'next/link';
-import { HiBolt } from 'react-icons/hi2';
-import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
-import FeaturesList from './features-list';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function FirstSection() {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.getElementById('first-section');
+      if (section) {
+        const { top } = section.getBoundingClientRect();
+        setIsVisible(top < window.innerHeight * 0.8);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3500,
+    arrows: false,
+    pauseOnHover: true,
+  };
 
   return (
-    <div className="relative z-[2] flex w-full flex-col bg-cover pt-[90px] md:pt-[100px] xl:pt-[140px]">
-      <div className="flex max-w-[unset] flex-col px-5 md:px-10 xl:px-0">
-        <div className="mb-10 flex w-[stretch] flex-col">
-          <div className="mx-auto flex flex-col items-center text-center">
-            <Badge
-              variant="outline"
-              className="mx-auto mb-2.5 w-max px-4 py-2 text-foreground dark:border-none dark:bg-zinc-800 dark:text-white"
-            >
-              REVOLUTIONIZING LEGAL RESEARCH IN LATIN AMERICA
-            </Badge>
-            <h1 className="mx-auto mb-5 w-full text-center text-3xl font-extrabold text-foreground dark:text-white md:mb-8 md:w-[100%] md:text-[48px] md:leading-[60px] lg:w-[90%] xl:w-[70%] xl:text-6xl xl:leading-[70px] 2xl:w-[60%]">
-              Solving Critical Challenges in Latin American Legal Research
-            </h1>
-            <p className="w-[96%] text-base font-normal leading-8 text-foreground dark:text-zinc-400 md:w-[80%] md:text-base md:leading-8 lg:w-[80%] xl:w-[54%] xl:text-lg xl:leading-[32px] 2xl:text-lg 2xl:leading-[32px]">
-              We're addressing the key pain points in Latin American legal research with our comprehensive digital solution, making legal intelligence accessible, reliable, and efficient.
-            </p>
-          </div>
-        </div>
-        <FeaturesList />
-        <div className="mx-auto mt-5 flex min-h-[760px] w-[1170px] max-w-full flex-wrap items-center justify-center gap-5 md:flex-row lg:flex-nowrap">
-          <div className="md:w-[75%] lg:w-[50%]">
-            <Card className="mb-5 flex w-full flex-col items-center justify-center px-8 py-10 text-center dark:border-zinc-800 md:px-14 xl:px-32 xl:py-16">
-              <h2 className="mb-4 text-8xl font-extrabold text-foreground dark:text-white">
-                100%
-              </h2>
-              <h4 className="mb-4 text-lg font-semibold text-foreground dark:text-white">
-                Digital Access
-              </h4>
-              <p className="text-base font-normal text-foreground dark:text-zinc-400">
-                Comprehensive digitization of legal resources across Latin American jurisdictions, 
-                eliminating the need for costly local counsel and ensuring efficient access to vital information.
-              </p>
-            </Card>
-            <Card className="flex w-full flex-col items-center justify-center px-4 py-10 text-center dark:border-zinc-800 md:px-14 xl:px-32 xl:py-16">
-              <h2 className="mb-4 text-8xl font-extrabold text-foreground dark:text-white">
-                24/7
-              </h2>
-              <h4 className="mb-4 text-lg font-semibold text-foreground dark:text-white">
-                Real-time Updates
-              </h4>
-              <p className="text-base font-normal text-foreground dark:text-zinc-400">
-                Stay current with continuously updated legal content, verified translations, 
-                and the latest precedents across all Latin American jurisdictions.
-              </p>
-            </Card>
-          </div>
-          <Card className="flex h-full flex-col items-center justify-stretch overflow-hidden text-center dark:border-zinc-800 md:w-[75%] lg:w-[50%]">
-            <div className="mb-auto h-full px-6 pt-8 md:px-14 xl:px-32 xl:pt-16">
-              <h2 className="mb-4 text-8xl font-extrabold text-foreground dark:text-white">
-                360°
-              </h2>
-              <h4 className="mb-4 text-lg font-semibold text-foreground dark:text-white">
-                Comprehensive Legal Coverage
-              </h4>
-              <p className="mb-6 text-base font-normal text-foreground dark:text-zinc-400">
-                From arbitration to administrative law, our platform provides unified access to 
-                precedents, translations, and analytics across all legal domains.
-              </p>
-              <Link
-                href="/dashboard/main"
-                className="flex items-center justify-center lg:mb-20"
+    <div 
+      id="first-section"
+      className="relative flex w-full min-h-screen flex-col items-center justify-center 
+      bg-[linear-gradient(180deg,_#FFF_0%,_#F4F4F5_100%)] 
+      dark:bg-[linear-gradient(180deg,_rgba(20,_20,_20,_1)_0%,_rgba(10,_10,_10,_1)_100%)]"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={isVisible ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="flex w-full max-w-[1400px] flex-col items-center text-center px-6 md:px-12 lg:px-16"
+      >
+        {/* Título con Animación Perfecta */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-5xl font-extrabold leading-tight text-foreground dark:text-white 
+          md:text-6xl lg:text-[70px] tracking-tight"
+        >
+          The Entire Legal Landscape of LATAM, One Click Away
+        </motion.h1>
+
+        {/* Subtítulo con Entrada Elegante */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-4 max-w-3xl text-lg font-light text-gray-600 dark:text-gray-400 md:text-xl lg:text-2xl"
+        >
+          Elenchus aims to harness the most comprehensive legal database in Latin America.
+        </motion.p>
+
+        {/* Slider con Experiencia Avanzada */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-14 w-full max-w-4xl"
+        >
+          <Slider {...settings}>
+            {[
+              { value: '80K+', title: 'Latin American Case Law & Precedents', description: 'Access Latin America\'s largest curated database of case law, including judicial decisions, arbitral awards, and administrative rulings—all in one platform.' },
+              { value: '20+', title: 'Academic Publications', description: 'Access academic publications, including books, articles, and blogs from leading scholars and local experts.' },
+              { value: '5+', title: 'AI Models to Supercharge Your Legal Research', description: 'Elenchus integrates ChatGPT-4, Mistral, and DeepSeek within a meticulously curated Latin American legal database, ensuring accuracy and eliminating the risk of AI-generated hallucinations.' },
+              { value: '1', title: 'Unified Legal Search Engine for Latin America', description: 'The first unified legal search engine for Latin America, offering structured, searchable, and AI-enhanced insights in one platform.' }
+            ].map((item, index) => (
+              <motion.div key={index}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                whileTap={{ scale: 0.97 }}
+                className="cursor-pointer"
               >
-                <Button
-                  variant="outline"
-                  className="flex items-center justify-center px-4 py-6 text-sm font-medium dark:text-white md:mb-0"
+                <Card className="flex flex-col items-center justify-center px-6 py-8 text-center 
+                  dark:border-zinc-800 shadow-lg transition-all duration-300 transform hover:shadow-2xl hover:scale-105"
                 >
-                  Explore Our Solutions
-                </Button>
-              </Link>
-            </div>
-            <Image
-              src={theme === 'dark' ? numbersdark.src : numberslight.src}
-              width={575}
-              height={317}
-              alt=""
-              className="-mb-0.5 mt-10 w-full max-w-[335px] md:mt-12 md:max-w-[575px] lg:mt-0"
-            />
-          </Card>
-        </div>
-        <div className="mx-auto mt-20 flex flex-col items-center justify-center md:flex-row">
-          <Link className="mb-5 md:mb-0 md:me-5" href="/dashboard/main">
-            <Button className="flex items-center justify-center px-4 py-6 text-sm font-medium md:mb-0">
-              <HiBolt className="me-2 h-4 w-4" />
-              Start Your Free Trial
+                  <h2 className="mb-2 text-6xl font-extrabold text-foreground dark:text-white">{item.value}</h2>
+                  <h4 className="mb-2 text-xl font-semibold text-foreground dark:text-white">{item.title}</h4>
+                  <p className="text-base font-normal text-gray-600 dark:text-gray-400">
+                    {item.description}
+                  </p>
+                </Card>
+              </motion.div>
+            ))}
+          </Slider>
+        </motion.div>
+
+        {/* Botones con Interacciones Pro-Level */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.6 }}
+          className="mt-14 flex space-x-6"
+        >
+        <Link href="/dashboard/main">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button className="px-12 py-5 text-lg font-medium shadow-lg 
+            bg-black text-white hover:bg-gray-900 transition-all duration-300 
+            dark:bg-white dark:text-black dark:hover:bg-gray-300">
+              Book a Demo
             </Button>
+            </motion.div>
           </Link>
-          <Link href="/dashboard/main">
-            <Button
-              variant="outline"
-              className="mb-6 flex w-full items-center justify-center px-4 py-6 text-sm font-medium dark:text-white md:mb-0 md:w-[unset]"
-            >
-              Schedule a Demo
-            </Button>
-          </Link>
-        </div>
-        <p className="mx-auto mt-4 px-12 text-center text-xs font-normal text-foreground dark:text-zinc-400 md:px-0 md:text-start">
-          🔍 Discover how we're making Latin American legal research more transparent, efficient, and reliable.
-        </p>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
