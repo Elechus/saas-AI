@@ -114,12 +114,13 @@ export default function FirstSection() {
           transition={{ duration: 0.7, delay: 0.6 }}
           className="mt-14 flex space-x-6"
         >
-          <Link href="/dashboard/main">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="px-12 py-5 text-lg font-medium shadow-lg 
-              hover:shadow-xl transition-all duration-300 dark:bg-blue-500">
-                Book a Demo
-              </Button>
+        <Link href="/dashboard/main">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button className="px-12 py-5 text-lg font-medium shadow-lg 
+            bg-black text-white hover:bg-gray-900 transition-all duration-300 
+            dark:bg-white dark:text-black dark:hover:bg-gray-300">
+              Book a Demo
+            </Button>
             </motion.div>
           </Link>
         </motion.div>
