@@ -1,3 +1,4 @@
+{/*
 import { Badge } from '../ui/badge';
 
 export default function FeaturesTitle() {
@@ -25,3 +26,4 @@ export default function FeaturesTitle() {
     </div>
   );
 } 
+*/}
