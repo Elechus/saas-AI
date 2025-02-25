@@ -60,11 +60,11 @@ export default function NavbarFixed({ toggleTheme, currentTheme }: NavbarFixedPr
 
         {/* NAVIGATION LINKS */}
         <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-foreground dark:text-white">
-          <Link href="/pricing" className="hover:text-gray-500 transition-all">
-            Pricing
-          </Link>
           <Link href="/about" className="hover:text-gray-500 transition-all">
             About Us
+          </Link>
+          <Link href="/pricing" className="hover:text-gray-500 transition-all">
+            Pricing
           </Link>
           <Link href="#faqs" className="hover:text-gray-500 transition-all">
             FAQs
