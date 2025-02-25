@@ -1,18 +1,34 @@
 // eslint-disable
+'use client';
 
+import { useEffect, useState } from 'react';
 import { FooterWebsite } from '@/components/footer/FooterWebsite';
 import Faq from '@/components/landing/faq';
-//import FeatureOne from '@/components/landing/feature-one';
-//import FeatureThree from '@/components/landing/feature-three';
-//import FeatureTwo from '@/components/landing/feature-two';
 import FirstSection from '@/components/landing/first-section';
 import Hero from '@/components/landing/hero';
-//import Newsletter from '@/components/landing/newsletter';
 import SecondSection from '@/components/landing/second-section';
 import NavbarFixed from '@/components/navbar/NavbarFixed';
-//import FeaturesTitle from '@/components/landing/features-title';
 
-export default async function PricingPage() {
+export default function PricingPage() {
+  const [theme, setTheme] = useState('light');
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      setIsClient(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  };
+
   return (
     <div className="relative bg-white dark:bg-zinc-950">
       <div className="relative flex h-full min-h-screen flex-col items-center overflow-hidden">
@@ -20,16 +36,11 @@ export default async function PricingPage() {
           <Hero />
           <FirstSection />
           <SecondSection />
-         {/* <FeaturesTitle />*/}
-          {/*<FeatureOne />*/}
-          {/*<FeatureTwo />*/}
-          {/*<FeatureThree />*/}
           <Faq />
-          {/*<Newsletter />*/}
         </div>
         <FooterWebsite />
       </div>
-      <NavbarFixed />
+      {isClient && <NavbarFixed toggleTheme={toggleTheme} currentTheme={theme} />}
     </div>
   );
 }

@@ -2,10 +2,22 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useTheme } from 'next-themes';
 
 export function FooterWebsite() {
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="relative z-[3] flex flex-col items-center justify-between px-5 pb-[50px] xl:px-0">
       <div className="flex h-[1px] w-full max-w-[1170px] bg-zinc-200 dark:bg-zinc-800" />
@@ -15,7 +27,7 @@ export function FooterWebsite() {
         <div className="flex flex-col items-start">
           <Link href="/" className="flex items-center">
             <Image 
-              src="/img/light/logo/logo_black.png" 
+              src={theme === 'light' ? '/img/light/logo/logo_black.png' : '/img/dark/logo/logo_white.png'}
               alt="Elenchus Logo" 
               width={40} 
               height={40} 

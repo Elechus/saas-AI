@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Faq from '@/components/landing/faq';
 import InnerContent from '@/components/layout/innerContent';
 import NavbarFixed from '@/components/navbar/NavbarFixed';
@@ -9,7 +10,6 @@ import { getStripe } from '@/utils/stripe/client';
 import { checkoutWithStripe } from '@/utils/stripe/server';
 import { User } from '@supabase/supabase-js';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { HiOutlineCheckCircle } from 'react-icons/hi2';
 import { FooterWebsite } from '../footer/FooterWebsite';
 import { Badge } from '../ui/badge';
@@ -25,6 +25,24 @@ export default function Pricing({ user, products, subscription }: Props) {
   const router = useRouter();
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
   const currentPath = usePathname();
+  const [theme, setTheme] = useState('light');
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      setIsClient(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  };
 
   const handleCheckout = async (price: any) => {
     setPriceIdLoading(price.id);
@@ -64,7 +82,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 
   return (
     <div className="relative w-full flex-col overflow-hidden bg-white dark:bg-zinc-950 pt-[40px] md:pt-[140px]" id="pricing">
-      <NavbarFixed />
+      {isClient && <NavbarFixed toggleTheme={toggleTheme} currentTheme={theme} />}
       <InnerContent extra="z-[1] max-w-full md:max-w-full xl:max-w-[1170px]">
         <div className="mb-16 w-full flex-col px-5 md:px-0">
           <div className="flex flex-col items-center justify-center px-5 text-start md:px-10 xl:px-0">
@@ -148,11 +166,12 @@ export default function Pricing({ user, products, subscription }: Props) {
             </ul>
           </Card>
         </div>
-        <p className="mt-12 text-lg text-gray-500 dark:text-gray-400 text-center">
-          14-Day Money Back Guarantee
-        </p>
+        <div className="mb-10">
+          <p className="mt-20 pb-10 text-lg text-gray-500 dark:text-gray-400 text-center">
+            14-Day Money Back Guarantee
+          </p>
+        </div>
       </InnerContent>
-      <Faq />
       <FooterWebsite />
     </div>
   );
