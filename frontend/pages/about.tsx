@@ -3,6 +3,8 @@ import NavbarFixed from '@/components/navbar/NavbarFixed';
 import { FooterWebsite } from '@/components/footer/FooterWebsite';
 import { motion, AnimatePresence } from 'framer-motion';
 import '@/styles/globals.css';
+import { useTheme } from 'next-themes';
+
 
 const missionData = [
   {
@@ -38,9 +40,9 @@ const missionData = [
 ];
 
 export default function AboutUs() {
-  const [isClient, setIsClient] = useState(false);
-  const [theme, setTheme] = useState('light');
-  const [index, setIndex] = useState(0);
+    const { theme, setTheme } = useTheme();
+    const [isClient, setIsClient] = useState(false);
+    const [index, setIndex] = useState(0);
 
   useEffect(() => {
     document.body.style.overflowX = 'hidden';
@@ -73,7 +75,7 @@ export default function AboutUs() {
   return (
     <div className="bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white">
       <div className="relative z-50">
-        {isClient && <NavbarFixed toggleTheme={toggleTheme} currentTheme={theme} />}
+      {isClient && <NavbarFixed toggleTheme={toggleTheme} currentTheme={theme || 'light'} />}
       </div>
 
       <motion.section
@@ -124,9 +126,9 @@ export default function AboutUs() {
       </motion.section>
 
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-8 bg-gray-50 dark:bg-zinc-900 py-24">
-        <h2 className="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white mb-12">
-          Our Mission
-        </h2>
+        <div className="text-center mb-6">
+        <h2 className="text-3xl font-bold">Our Mission</h2>
+        </div>
 
         <div className="relative w-full max-w-5xl mx-auto flex items-center justify-center">
           <AnimatePresence mode="wait">
@@ -147,13 +149,23 @@ export default function AboutUs() {
             </motion.div>
           </AnimatePresence>
 
-          <button className="absolute left-0 md:-left-12 top-1/2 transform -translate-y-1/2 bg-gray-900 dark:bg-white text-white dark:text-black p-4 rounded-full shadow-lg hover:scale-110 transition-all" onClick={prevSlide}>
-            ◀
-          </button>
+          <button
+            className="absolute left-0 md:-left-12 top-1/2 transform -translate-y-1/2 
+                        bg-gray-900 dark:bg-white text-black 
+                        p-4 rounded-full shadow-lg hover:scale-110 transition-all"
+            onClick={prevSlide}
+            >
+            <span className="text-2xl text-black">◀</span>
+            </button>
 
-          <button className="absolute right-0 md:-right-12 top-1/2 transform -translate-y-1/2 bg-gray-900 dark:bg-white text-white dark:text-black p-4 rounded-full shadow-lg hover:scale-110 transition-all" onClick={nextSlide}>
-            ▶
-          </button>
+            <button
+            className="absolute right-0 md:-right-12 top-1/2 transform -translate-y-1/2 
+                        bg-gray-900 dark:bg-white text-black 
+                        p-4 rounded-full shadow-lg hover:scale-110 transition-all"
+            onClick={nextSlide}
+            >
+            <span className="text-2xl text-black">▶</span>
+            </button>
         </div>
       </section>
 
