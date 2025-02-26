@@ -29,8 +29,8 @@ export default function Home() {
         </h1>
         <p className="3xl:max-w-[56%] mx-auto mb-8 max-w-full text-center text-base font-normal leading-8 text-foreground dark:text-zinc-400 md:max-w-[80%] md:text-lg md:leading-8 2xl:max-w-[66%]">
           Looking for something else? Chat with us via{' '}
-          <a className="underline" href="mailto:hello@horizon-ui.com">
-            hello@horizon-ui.com
+          <a className="underline" href="mailto:legalai.gt@gmail.com">
+          legalai.gt@gmail.com
           </a>{' '}
           and we will try our best to help you with your questions!
         </p>
@@ -39,110 +39,77 @@ export default function Home() {
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
             <AccordionTrigger className="dark:text-white">
-              What is Horizon UI Boilerplate?
+            What makes Elenchus different from other legal research platforms?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
+            Elenchus is the first AI-powered legal search engine focused exclusively on Latin America. 
+            We centralize judicial, arbitral, and administrative decisions, combining deep legal expertise with cutting-edge AI tools to deliver precise, 
+            data-driven insights—ensuring transparency, predictability, and efficiency in legal research.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
             <AccordionTrigger className="dark:text-white">
-              Is Horizon UI Boilerplate Free?
+            ⁠What type of legal data does Elenchus provide?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
+            Our platform offers access to curated case law, judicial rulings, 
+            arbitral awards, and administrative decisions across Latin America.
+            We digitize, translate, and enrich this data, enabling advanced search, 
+            comparative analysis, and AI-driven insights tailored to legal professionals.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger className="dark:text-white">
-              Pricing Page.
+            How does AI enhance legal research on Elenchus?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
+            Elenchus integrates multiple AI models to streamline legal research. 
+            Our AI tools identify patterns, extract key insights, predict legal trends, 
+            and assist in drafting preliminary arguments—saving time and improving 
+            decision-making with unparalleled accuracy.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
             <AccordionTrigger className="dark:text-white">
-              How does Horizon UI Boilerplate work?
+            Can I interact with different AI models on the platform?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
+            Yes. Elenchus allows you to query and analyze legal data using integrated 
+            AI models, including ChatGPT-4, Mistral, and DeepSeek. Our built-in calibration 
+            ensures accuracy, eliminating AI-generated errors or hallucinated precedents.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5">
             <AccordionTrigger className="dark:text-white">
-              Is Horizon UI Boilerplate suitable for all academic levels?
+            ⁠Who can benefit from using Elenchus?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
+            Elenchus is designed for law firms, corporate legal teams, NGOs, international organizations, 
+            and academic institutions handling Latin American legal matters. Whether for litigation, arbitration, 
+            compliance, or policy research, our platform provides the data and insights needed to navigate 
+            complex legal landscapes with confidence.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-6">
             <AccordionTrigger className="dark:text-white">
-              Can I trust the quality of the content generated by Horizon UI
-              Boilerplate?
+            How does Elenchus ensure the accuracy of its data?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
+            Elenchus employs rigorous data validation processes, including manual review, 
+            AI-driven quality control, and compliance with international standards. 
+            Our team ensures that all data is accurate, up-to-date, and meets the highest 
+            legal standards, providing a reliable source for legal professionals.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-7">
             <AccordionTrigger className="dark:text-white">
-              Is the content generated by Horizon UI Boilerplate
-              plagiarism-free?
+            Is Elenchus suitable for non-lawyers or individuals without legal expertise?
             </AccordionTrigger>
             <AccordionContent className="dark:text-white">
-              This is an awesome example of how you can use our accordion
-              component for your FAQs section to provide clear, concise answers
-              while maintaining a clean and engaging user interface. The
-              intuitive design allows users to easily navigate through common
-              questions, expanding each section to find detailed information
-              without overwhelming them with text. It's an ideal way to
-              streamline your website's content and enhance user experience,
-              ensuring that visitors have quick access to the answers they need.
-            </AccordionContent>
+            Yes! While Elenchus is designed primarily for legal professionals, its intuitive interface 
+            and AI-powered tools make it accessible for researchers, journalists, business professionals, 
+            and anyone needing reliable legal insights. Our platform simplifies complex legal texts, 
+            provides summaries, and offers AI-driven guidance to help users navigate legal information with ease.            </AccordionContent>
           </AccordionItem>
         </Accordion>
         {/* <Accordion allowMultiple>
