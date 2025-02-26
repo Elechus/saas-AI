@@ -55,8 +55,8 @@ export function FooterWebsite() {
           <Link href="/privacy-policy" className="text-sm font-medium text-foreground dark:text-white">
             Privacy Policy
           </Link>
-          <Link href="/terms-of-service" className="text-sm font-medium text-foreground dark:text-white">
-            Terms of Service
+          <Link href="/terms-and-conditions" className="text-sm font-medium text-foreground dark:text-white">
+            Terms and Conditions
           </Link>
         </div>
       </div>
